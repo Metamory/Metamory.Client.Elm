@@ -1,0 +1,15 @@
+{
+  "name": "metamory.elm",
+  "version": "1.0.0",
+  "description": "```shell elm make src/main.elm --output src/elm.js ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Arjan Einbu <arjan@einbu.no>",
+  "license": "ISC",
+  "dependencies": {
+    "elm": "^0.19.0-bugfix6"
+  }
+}
