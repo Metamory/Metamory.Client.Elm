@@ -7,4 +7,5 @@ type alias Model = { documentName: String
                    , selectedVersion: VersionId
                    , publishedVersion: VersionId
                    , content: String
+                   , label: String
                    }

@@ -10,6 +10,7 @@ import Model exposing (..)
 import DocumentSelector exposing (..)
 import VersionSelector exposing (..)
 import PublishButton exposing (..)
+import SaveButton exposing (..)
 
 
 main =
@@ -26,6 +27,7 @@ init =
         "second"
         "third"
         "<initial content here>"
+        "label"
 
 
 update: Msg -> Model -> Model
@@ -35,16 +37,26 @@ update msg model =
         PublishVersion version -> { model | publishedVersion = version }
         ChangeDocumentName name -> { model | documentName = name }
         LoadDocument documentName -> { model | content = "<loaded content from \"" ++ model.documentName ++ "\" here>"}
+        ChangeLabel label -> { model | label = label }
+        SaveDocument label -> model --TODO
 
 
 view: Model -> Html Msg
 view model =
     div []
-        [ h1 [] [ text ("Document name is:" ++ model.documentName)]
-        , p [] [ text ("The selected version is: " ++ model.selectedVersion) ]
-        , p [] [ text ("The published version is: " ++ model.publishedVersion) ]
-        , DocumentSelector.view model.documentName
-        , VersionSelector.view model.versions model.selectedVersion model.publishedVersion
-        , PublishButton.view model.selectedVersion
-        , textarea [] [ text model.content]
+        [ div [ style "border" "thin solid red"
+              , style "background" "lightgray"
+              , style "padding" "0.5em"
+              ]
+              [ h1 [] [ text ("Summary")]
+              , p [] [ text ("Document name is:" ++ model.documentName)]
+              , p [] [ text ("The selected version is: " ++ model.selectedVersion) ]
+              , p [] [ text ("The published version is: " ++ model.publishedVersion) ]
+              , p [] [ text ("The label is: " ++ model.label) ]
+              ]
+        , div [] [ DocumentSelector.view model.documentName ]
+        , div [] [ VersionSelector.view model.versions model.selectedVersion model.publishedVersion ]
+        , div [] [ PublishButton.view model.selectedVersion ]
+        , div [] [ textarea [] [ text model.content] ]
+        , div [] [ SaveButton.view model.label ]
     ]

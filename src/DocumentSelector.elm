@@ -7,6 +7,7 @@ import Html.Events exposing (..)
 import Msg exposing (..)
 
 
+view : String -> Html Msg
 view documentName =
     div []
         [ span [] [ text "Select document"]
