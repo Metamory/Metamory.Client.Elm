@@ -19,15 +19,16 @@ main =
 
 init : Model
 init =
-    Model "initial name of the document"
-        [ "first"
-        , "second"
-        , "third"
-        ]
-        "second"
-        "third"
-        "<initial content here>"
-        "label"
+    { documentName = "initial name of the document"
+    , versions = [ "first"
+                 , "second"
+                 , "third"
+                 ]
+    , selectedVersion = "second"
+    , publishedVersion = "third"
+    , content = "<initial content here>"
+    , label = ""
+    }
 
 
 update: Msg -> Model -> Model
@@ -38,7 +39,7 @@ update msg model =
         ChangeDocumentName name -> { model | documentName = name }
         LoadDocument documentName -> { model | content = "<loaded content from \"" ++ model.documentName ++ "\" here>"}
         ChangeLabel label -> { model | label = label }
-        SaveDocument label -> model --TODO
+        SaveDocument label -> { model | versions = List.append model.versions [label], selectedVersion = label, label = "" }
 
 
 view: Model -> Html Msg

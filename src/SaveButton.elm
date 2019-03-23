@@ -14,7 +14,7 @@ view label =
                 , onInput ChangeLabel
                 , placeholder "label"
                 ] []
-        , button [ onClick (SaveDocument label)
+        , button [ onClick <| SaveDocument label
                  ]
                  [ text "Save"]
         ]

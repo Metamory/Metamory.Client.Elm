@@ -9,4 +9,4 @@ import Msg exposing (..)
 
 view : VersionId -> Html Msg
 view selectedVersion =
-    button [ onClick ( PublishVersion selectedVersion ) ] [ text "Publish now" ]
+    button [ onClick <| PublishVersion selectedVersion  ] [ text "Publish now" ]

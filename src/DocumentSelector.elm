@@ -15,7 +15,7 @@ view documentName =
                 , onInput ChangeDocumentName
                 , placeholder "document name"
                 ] []
-        , button [ onClick (LoadDocument documentName)
+        , button [ onClick <| LoadDocument documentName
                  ]
                  [ text "Load"]
         ]
