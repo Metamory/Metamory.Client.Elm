@@ -8,7 +8,6 @@ import Json.Decode as D
 
 import Msg exposing (..)
 import Model exposing (..)
-import Version exposing (VersionId)
 
 
 view : (List VersionId) -> VersionId -> (Maybe VersionId) -> Html Msg
@@ -26,7 +25,7 @@ viewOption version selectedVersion publishedVersion =
            , selected <| version == selectedVersion
            ]
            [ text <| if version == Maybe.withDefault "" publishedVersion
-                        then version ++ "*"
+                        then "*" ++ version
                         else version
            ]
 
@@ -37,16 +36,19 @@ getVersions documentName =
         url = "https://localhost:5001/content/testsite1/testcontent1/versions"
     in
         Http.get { url = url
-                 , expect = Http.expectJson GotVersions <| D.field "versions" <| D.list <| D.field "versionId" D.string
+                 , expect = Http.expectJson GotVersions <| D.map2 Metadata
+                                                                (D.field "versions" <| D.list <| D.field "versionId" D.string)
+                                                                (D.nullable <| D.field "publishedVersionId" D.string)
                  }
 
 
-gotVersions : Model -> (Result Http.Error (List String)) -> (Model, Cmd msg)
+gotVersions : Model -> (Result Http.Error (Metadata)) -> (Model, Cmd msg)
 gotVersions model responseContent =
     case responseContent of
-            Ok versions -> ( { model | versions = versions
-                                , selectedVersion = List.reverse versions |> List.head |> Maybe.withDefault ""
-                                -- TODO publishedVersion = ...
-                                }
+            Ok metadata -> ( { model
+                             | versions = metadata.versions
+                             , selectedVersion = List.reverse metadata.versions |> List.head |> Maybe.withDefault ""
+                             , publishedVersion = metadata.publishedVersion
+                             }
                             , Cmd.none )
             Err _ -> ( model, Cmd.none )

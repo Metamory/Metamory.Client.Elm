@@ -1,6 +1,5 @@
 module Model exposing (..)
 
-import Version exposing (VersionId)
 
 type alias Model = { documentName: String
                    , versions: List VersionId
@@ -21,3 +20,11 @@ empty =
     , content = "<initial content here>"
     , label = ""
     }
+
+
+type alias VersionId = String
+
+
+type alias Metadata = { versions : (List String)
+                      , publishedVersion : Maybe String
+                      }

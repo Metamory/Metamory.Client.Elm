@@ -3,8 +3,7 @@ module Msg exposing (..)
 import Http
 import Json.Decode as D
 
-import Model exposing (Model)
-import Version exposing (VersionId)
+import Model exposing (..)
 
 
 type Msg = SelectVersion VersionId
@@ -13,5 +12,4 @@ type Msg = SelectVersion VersionId
          | LoadDocument String
          | ChangeLabel String
          | SaveDocument String
-         | GotVersions (Result Http.Error (List String))
-
+         | GotVersions (Result Http.Error (Metadata))
