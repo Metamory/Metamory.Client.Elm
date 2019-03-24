@@ -31,7 +31,7 @@ update msg model =
     case msg of
         SelectVersion version -> ( { model | selectedVersion = version }, Cmd.none )
         
-        PublishVersion version -> ( { model | publishedVersion = version }, Cmd.none )
+        PublishVersion version -> ( { model | publishedVersion = Just version }, Cmd.none )
         
         ChangeDocumentName name -> ( { model | documentName = name }, Cmd.none )
         
@@ -48,11 +48,7 @@ update msg model =
                               , Cmd.none
                               )
         
-        GotVersions responseContent -> 
-            case responseContent of
-                Ok versions -> ( { model | versions = versions, selectedVersion = List.reverse versions |> List.head |> Maybe.withDefault "" }
-                               , Cmd.none )
-                Err _ -> ( model, Cmd.none )
+        GotVersions responseContent -> gotVersions model responseContent
 
 
 view: Model -> Html Msg
@@ -65,7 +61,7 @@ view model =
               [ h1 [] [ text ( "Summary" ) ]
               , p [] [ text ( "Document name is:" ++ model.documentName) ]
               , p [] [ text ( "The selected version is: " ++ model.selectedVersion) ]
-              , p [] [ text ( "The published version is: " ++ model.publishedVersion) ]
+              , p [] [ text ( "The published version is: " ++  (Maybe.withDefault "None" model.publishedVersion)) ]
               , p [] [ text ( "The label is: " ++ model.label) ]
               ]
         , div [] [ DocumentSelector.view model.documentName ]

@@ -1,8 +1,9 @@
 module Msg exposing (..)
 
 import Http
-import Json.Decode exposing (..)
+import Json.Decode as D
 
+import Model exposing (Model)
 import Version exposing (VersionId)
 
 
@@ -14,12 +15,3 @@ type Msg = SelectVersion VersionId
          | SaveDocument String
          | GotVersions (Result Http.Error (List String))
 
-
-getVersions : String -> Cmd Msg
-getVersions documentName =
-    let
-        url = "https://localhost:5001/content/testsite1/testcontent1/versions"
-    in
-        Http.get { url = url
-                 , expect = Http.expectJson GotVersions (Json.Decode.list (Json.Decode.field "versionId" Json.Decode.string))
-                 }
