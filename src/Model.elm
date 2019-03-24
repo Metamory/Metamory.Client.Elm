@@ -9,3 +9,15 @@ type alias Model = { documentName: String
                    , content: String
                    , label: String
                    }
+
+
+empty : Model
+empty =
+    --TODO: make an empty model
+    { documentName = "testcontent1"
+    , versions = []
+    , selectedVersion = ""
+    , publishedVersion = ""
+    , content = "<initial content here>"
+    , label = ""
+    }
