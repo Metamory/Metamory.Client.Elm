@@ -21,6 +21,6 @@ view : (List VersionId) -> VersionId -> VersionId -> Html Msg
 view versions selectedVersion publishedVersion = 
     div []
         [ span [] [ text "Select version" ]
-        , select [on "change" <| Json.Decode.map SelectVersion targetValue]
+        , select [on "change" <| Json.Decode.map SelectVersion targetValue ]
                  (List.map (\version -> viewOption version selectedVersion publishedVersion) versions)
         ]

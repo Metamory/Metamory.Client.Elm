@@ -41,14 +41,17 @@ update msg model =
         
         ChangeLabel label -> ( { model | label = label }, Cmd.none )
         
-        SaveDocument label -> ( { model | versions = List.append model.versions [label], selectedVersion = label, label = "" }
+        SaveDocument label -> ( { model
+                                | versions = List.append model.versions [label]
+                                , selectedVersion = label
+                                , label = "" }
                               , Cmd.none
                               )
         
         GotVersions responseContent -> 
             case responseContent of
-                Ok versions -> (
-                    { model | versions = versions}, Cmd.none )
+                Ok versions -> ( { model | versions = versions, selectedVersion = List.reverse versions |> List.head |> Maybe.withDefault "" }
+                               , Cmd.none )
                 Err _ -> ( model, Cmd.none )
 
 

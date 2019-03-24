@@ -5,5 +5,6 @@ type alias VersionId = String
 
 -- type alias Version =
 --     { versionId : VersionId
+--     , label : String
 --     , isPublished : Bool
 --     }
